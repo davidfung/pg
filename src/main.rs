@@ -1,4 +1,5 @@
 use chrono::{prelude::*, Duration, LocalResult};
+use docx_rs::*;
 use std::iter::from_fn;
 
 fn main() {
@@ -51,3 +52,14 @@ fn test1() {
 
 #[test]
 fn test_first_sunday() {}
+
+#[test]
+fn test_wordx() -> Result<(), DocxError> {
+    let path = std::path::Path::new("./hello.docx");
+    let file = std::fs::File::create(&path).unwrap();
+    Docx::new()
+        .add_paragraph(Paragraph::new().add_run(Run::new().add_text("Hello")))
+        .build()
+        .pack(file)?;
+    Ok(())
+}
