@@ -1,16 +1,16 @@
-use chrono::{prelude::*, Duration, LocalResult};
+use chrono::{prelude::*, Duration};
 use docx_rs::*;
 use std::iter::from_fn;
 
 fn main() {
     println!("Hello, world!");
-    let sundays = sundays_in_year(2022);
-    for elm in sundays {
-        println!("{:?}", elm.single().unwrap());
+    let sundays = sundays_in_year(2023);
+    for sunday in sundays {
+        println!("{:?}", sunday);
     }
 }
 
-fn sundays_in_year(year: i32) -> impl Iterator<Item = LocalResult<DateTime<Local>>> {
+fn sundays_in_year(year: i32) -> impl Iterator<Item = DateTime<Local>> {
     let mut d = Local
         .with_ymd_and_hms(year, 1, 1, 0, 0, 0)
         .single()
@@ -24,7 +24,7 @@ fn sundays_in_year(year: i32) -> impl Iterator<Item = LocalResult<DateTime<Local
         if d.year() != year {
             None
         } else {
-            Some(LocalResult::Single(d))
+            Some(d)
         }
     });
 
@@ -32,26 +32,13 @@ fn sundays_in_year(year: i32) -> impl Iterator<Item = LocalResult<DateTime<Local
 }
 
 #[test]
-fn test1() {
-    let mut count = 0;
-    let counter = std::iter::from_fn(move || {
-        // Increment our count. This is why we started at zero.
-        count += 1;
-
-        // Check to see if we've finished counting or not.
-        if count < 6 {
-            Some(count)
-        } else {
-            None
-        }
-    });
-    assert_eq!(counter.collect::<Vec<_>>(), &[1, 2, 3, 4, 5]);
+fn test_sundays_in_year() {
+    let mut sundays = sundays_in_year(2022);
+    assert_eq!(sundays.count(), 52);
+    sundays = sundays_in_year(2022);
+    let x = sundays.next();
+    assert_eq!(x, Local.with_ymd_and_hms(2022, 1, 2, 0, 0, 0).single());
 }
-
-// fn first_sunday(year: u16) -> DateTime {}
-
-#[test]
-fn test_first_sunday() {}
 
 #[test]
 fn test_wordx() -> Result<(), DocxError> {
