@@ -1,5 +1,10 @@
 = TODO
 
 == Version 1
-* implement get_next_sunday()
-* learn clap
+[x] implement get_next_sunday()
+[ ] clean up wordx test
+[ ] add cli usage interface
+[ ] create a subdirectory
+[ ] create a yearful word docx in a folder
+[ ] fill in content in generated documents
+
