@@ -1,12 +1,31 @@
 use chrono::{prelude::*, Duration};
 use docx_rs::*;
+use std::fs::{self, File};
 use std::iter::from_fn;
+use std::path::Path;
 
 fn main() {
     println!("Hello, world!");
+
+    let year = 2023;
+    let year_str = year.to_string();
+
+    let path = Path::new(&year_str);
+    if !path.exists() {
+        fs::create_dir(path).unwrap();
+    }
+
     let sundays = sundays_in_year(2023);
-    for sunday in sundays {
-        println!("{:?}", sunday);
+    for sunday in sundays.take(5) {
+        let filename = format!("{} Bulletin Info.docx", sunday.format("%Y-%m-%d"));
+        let path = Path::new(".").join(&year_str).join(&filename);
+        let file = File::create(&path).unwrap();
+        let body = format!("{} Bulletin Info", sunday.format("%Y-%m-%d"));
+        Docx::new()
+            .add_paragraph(Paragraph::new().add_run(Run::new().add_text(body)))
+            .build()
+            .pack(file)
+            .unwrap();
     }
 }
 
