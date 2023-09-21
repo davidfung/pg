@@ -21,8 +21,10 @@ fn main() {
         let path = Path::new(".").join(&year_str).join(&filename);
         let file = File::create(&path).unwrap();
         let body = format!("{} Bulletin Info", sunday.format("%Y-%m-%d"));
+
         Docx::new()
-            .add_paragraph(Paragraph::new().add_run(Run::new().add_text(body)))
+            .add_paragraph(Paragraph::new().add_run(Run::new().add_text(body).size(36).bold()))
+            .add_paragraph(Paragraph::new())
             .build()
             .pack(file)
             .unwrap();

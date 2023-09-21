@@ -5,7 +5,7 @@
 [x] create a subdirectory
 [x] create a yearful word docx in a folder
 [x] fill in content in generated documents
-[ ] add style to document body
+[x] add style to document body
 [ ] clean up wordx test
 [ ] add cli usage interface
 
