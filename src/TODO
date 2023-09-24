@@ -8,4 +8,6 @@
 [x] add style to document body
 [x] clean up wordx test
 [ ] add cli usage interface
+[ ] add cli command gen_binfo
+[ ] add cli command version
 
