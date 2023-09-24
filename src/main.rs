@@ -5,8 +5,19 @@ use std::iter::from_fn;
 use std::path::Path;
 
 fn main() {
-    println!("Hello, world!");
+    let args: Vec<String> = std::env::args().collect();
 
+    if args.len() <= 1 {
+        println!("Print version and usage"); //TODO
+        std::process::exit(0);
+    }
+
+    // switch on command word, arg[1] //TODO
+    println!("arg0={}", args[0]);
+    println!("arg1={}", args[1]);
+}
+
+fn gen_bulletin_info() {
     let year = 2023;
     let year_str = year.to_string();
 
