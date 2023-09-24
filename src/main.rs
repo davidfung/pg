@@ -62,12 +62,20 @@ fn test_sundays_in_year() {
 }
 
 #[test]
-fn test_wordx() -> Result<(), DocxError> {
-    let path = std::path::Path::new("./hello.docx");
+fn test_wordx() {
+    let name = "./hello.docx";
+    let path = std::path::Path::new(name);
     let file = std::fs::File::create(&path).unwrap();
+
+    // generate a Word document
     Docx::new()
         .add_paragraph(Paragraph::new().add_run(Run::new().add_text("Hello")))
         .build()
-        .pack(file)?;
-    Ok(())
+        .pack(file)
+        .unwrap();
+
+    // delete the generated Word document
+    if std::path::Path::new(name).exists() {
+        fs::remove_file(name).expect("unable to remove test_wordx() test file");
+    }
 }

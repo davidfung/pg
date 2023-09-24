@@ -6,6 +6,6 @@
 [x] create a yearful word docx in a folder
 [x] fill in content in generated documents
 [x] add style to document body
-[ ] clean up wordx test
+[x] clean up wordx test
 [ ] add cli usage interface
 
