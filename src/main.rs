@@ -1,29 +1,41 @@
 use chrono::{prelude::*, Duration};
 use docx_rs::*;
+use std::env::Args;
 use std::fs::{self, File};
 use std::iter::from_fn;
 use std::path::Path;
 
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
+    let mut args = std::env::args();
 
     if args.len() <= 1 {
         usage();
         std::process::exit(0);
     }
 
-    match args[1].as_str() {
+    args.next();
+    let cmd = args.next().unwrap();
+    match cmd.as_str() {
         "gen_bulletin_info" => {
-            println!("Generating bulletin info...");
-            let year = args[2].parse().unwrap();
-            gen_bulletin_info(year);
+            gen_bulletin_info_helper(args);
         }
         _ => usage(),
     }
 }
 
 fn usage() {
-    println!("Print version and usage"); //TODO
+    println!("pg - Utility app for PMPG (version 1.0b)");
+}
+
+fn gen_bulletin_info_helper(mut args: Args) {
+    if args.len() < 1 {
+        println!("Generate bulletin info templates for a whole year");
+        println!("usage: pg gen_bulletin_info year");
+        std::process::exit(1);
+    }
+    println!("Generating bulletin info...");
+    let year: i32 = args.next().unwrap().parse().unwrap();
+    gen_bulletin_info(year)
 }
 
 fn gen_bulletin_info(year: i32) {
@@ -34,8 +46,8 @@ fn gen_bulletin_info(year: i32) {
         fs::create_dir(path).unwrap();
     }
 
-    let sundays = sundays_in_year(2023);
-    for sunday in sundays.take(5) {
+    let sundays = sundays_in_year(year);
+    for sunday in sundays {
         let filename = format!("{} Bulletin Info.docx", sunday.format("%Y-%m-%d"));
         let path = Path::new(".").join(&year_str).join(&filename);
         let file = File::create(&path).unwrap();

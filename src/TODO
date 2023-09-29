@@ -9,5 +9,5 @@
 [x] clean up wordx test
 [x] add cli usage interface
 [x] add cli command gen_bulletin_info
-[ ] add cli command usage
+[x] add cli command usage
 
