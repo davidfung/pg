@@ -24,18 +24,25 @@ fn main() {
 }
 
 fn usage() {
-    println!("pg - Utility app for PMPG (version 1.0b)");
+    let msg = "
+pg - Utility app for PMPG (version 1.0b)
+
+Commands:
+   gen_bulletin_info      Generate bulletin info templates for a whole year
+
+";
+    println!("{msg}");
 }
 
 fn gen_bulletin_info_helper(mut args: Args) {
     if args.len() < 1 {
-        println!("Generate bulletin info templates for a whole year");
-        println!("usage: pg gen_bulletin_info year");
+        println!("Usage: pg gen_bulletin_info year");
         std::process::exit(1);
     }
-    println!("Generating bulletin info...");
+    print!("Generating bulletin info... ");
     let year: i32 = args.next().unwrap().parse().unwrap();
-    gen_bulletin_info(year)
+    gen_bulletin_info(year);
+    println!("done");
 }
 
 fn gen_bulletin_info(year: i32) {
