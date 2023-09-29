@@ -8,17 +8,25 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
 
     if args.len() <= 1 {
-        println!("Print version and usage"); //TODO
+        usage();
         std::process::exit(0);
     }
 
-    // switch on command word, arg[1] //TODO
-    println!("arg0={}", args[0]);
-    println!("arg1={}", args[1]);
+    match args[1].as_str() {
+        "gen_bulletin_info" => {
+            println!("Generating bulletin info...");
+            let year = args[2].parse().unwrap();
+            gen_bulletin_info(year);
+        }
+        _ => usage(),
+    }
 }
 
-fn gen_bulletin_info() {
-    let year = 2023;
+fn usage() {
+    println!("Print version and usage"); //TODO
+}
+
+fn gen_bulletin_info(year: i32) {
     let year_str = year.to_string();
 
     let path = Path::new(&year_str);
