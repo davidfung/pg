@@ -2,6 +2,7 @@
 
 == Version 2
 [ ] modularize gen_bulletin_info
+[ ] provide web interface (Actix)
 
 == Version 1
 [x] implement get_next_sunday()
